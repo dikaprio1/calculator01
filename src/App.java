@@ -45,27 +45,11 @@ public class App {
                                 continue;
                             }
                             if (num2 >= 0) {
-                                switch (cal) {
-                                    case '+':
-                                        result = num1 + num2;
-                                        break exitwhile2;
-                                    case '-':
-                                        result = num1 - num2;
-                                        break exitwhile2;
-                                    case '*':
-                                        result = num1 * num2;
-                                        break exitwhile2;
-                                    case '/':
-                                        if(num2 == 0){
-                                            System.out.println("0으로 나눌수 없습니다.");
-                                            continue;
-                                        }
-                                        result = num1 / num2;
-                                        break exitwhile2;
-                                    default:
-                                        System.out.println("예상치못한 오류");
-                                        break exitwhile;
+                                if(cal == '/' && num2 == 0){
+                                    System.out.println("0으로 나눌수없습니다 다시입력해주세요");
+                                    continue;
                                 }
+                                result = new Calculator().calculate(num1, num2, cal);
                             }else{
                                 System.out.println("양의 정수를 입력해주세요");
                             }
