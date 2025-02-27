@@ -4,17 +4,21 @@ import java.util.Scanner;
 // 에디터 여백에 있는 <icon src="AllIcons.Actions.Execute"/> 아이콘을 클릭하세요.
 public class App {
     public static void main(String[] args) {
+        //속성
         Scanner sc = new Scanner(System.in);
         char cal = ' ';
         String input;
         int result = 0;
         int num1,num2;
+        Calculator calculator = new Calculator();
+
+
         exitwhile:
         while (true) {
             System.out.println("숫자 입력 (exit 입력시 종료) :");
             input = sc.next();
             if(input.equals("exit")){
-                break exitwhile;
+                break;
             }
             try {
                 num1 = Integer.parseInt(input);
@@ -25,10 +29,13 @@ public class App {
             if (num1 >= 0) {
                 exitwhile2:
                 while (true) {
-                    System.out.println("사칙연산 중 하나 선택 입력 (exit 입력시 종료) :");
+                    System.out.println("사칙연산(+,-,*,/) 중 하나 선택 입력 (exit 입력시 종료) :");
                     input = sc.next();
                     if(input.equals("exit")){
                         break exitwhile;
+                    } else if (input.length() > 1) {
+                        System.out.println("사칙연산(+,-,*,/)을 입력해주세요");
+                        continue;
                     }
                     cal = input.charAt(0);
                     if (cal == '+' || cal == '-' || cal == '*' || cal == '/') {
@@ -49,7 +56,7 @@ public class App {
                                     System.out.println("0으로 나눌수없습니다 다시입력해주세요");
                                     continue;
                                 }
-                                result = new Calculator().calculate(num1, num2, cal);
+                                result = calculator.calculate(num1, num2, cal);
                             }else{
                                 System.out.println("양의 정수를 입력해주세요");
                             }
