@@ -1,7 +1,5 @@
 import java.util.Scanner;
 
-//TIP 코드를 <b>실행</b>하려면 <shortcut actionId="Run"/>을(를) 누르거나
-// 에디터 여백에 있는 <icon src="AllIcons.Actions.Execute"/> 아이콘을 클릭하세요.
 public class App {
     public static void main(String[] args) {
         //속성
@@ -34,6 +32,8 @@ public class App {
             printResult(calculator,result);
         }
     }
+    
+    // 숫자 입력 받는 메서드
     private static Integer getNumberInput(Scanner sc){
         while(true){
             System.out.println("숫자 입력(exit입력 시 종료) :");
@@ -49,6 +49,8 @@ public class App {
 
         }
     }
+    
+    // 사칙연산 입력받는 메서드
     private static char getOperatorInput(Scanner sc){
         while(true){
             System.out.println("사칙연산(+,-,*,/) 중 하나 선택 입력 (exit입력 시 종료):");
@@ -62,7 +64,8 @@ public class App {
             System.out.println("사칙연산(+,-,*,/)을 입력해주세요.");
         }
     }
-
+    
+    //결과 출력 메서드
     private static void printResult(Calculator calculator,int result){
         System.out.println("결과 :"+result);
         System.out.println("가장 처음 리스트에 저장된 값 :"+calculator.printFirstList());
