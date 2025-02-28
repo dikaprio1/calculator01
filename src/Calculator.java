@@ -1,25 +1,30 @@
 import java.util.*;
 
-public class Calculator {
-    private final List<Integer> resultList = new ArrayList<>();
+public class Calculator<T extends Number> {
+    private final List<Number> resultList = new ArrayList<>();
 
     //사칙연산 수행 후에 결과값 반환하는 메서드
-    public int calculate(int num1, int num2, OperatorType operatorType) {
-        int result;
+    public Number calculate(T num1, T num2, OperatorType operatorType) {
+        double result;
         switch (operatorType) {
-            case ADD: result = num1 + num2; break;
-            case SUB:result = num1 - num2;break;
-            case MUL:result = num1 * num2;break;
-            case DIV:result = num1 / num2;break;
+            case ADD: result = num1.doubleValue() + num2.doubleValue(); break;
+            case SUB:result = num1.doubleValue() - num2.doubleValue();break;
+            case MUL:result = num1.doubleValue() * num2.doubleValue();break;
+            case DIV:result = num1.doubleValue() / num2.doubleValue();break;
             default:
                 System.out.println("예상치못한 오류");
                 return 0;
         }
-        resultList.add(result);
-        return result;
+        if (result % 1 == 0) {
+            resultList.add((int) result); // 정수 변환 후 저장
+            return (int) result;
+        } else {
+            resultList.add(result);     // 실수 그대로 저장
+            return result;
+        }
     }
     //가장 처음 리스트에 저장된 값 반환 -------------------------------
-    public int printFirstList() {
+    public Number printFirstList() {
         if(resultList.isEmpty()){
             System.out.println("리스트가 비어있습니다.");
             return 0;
@@ -27,7 +32,7 @@ public class Calculator {
         return resultList.get(0);
     }
     //가장 나중에 리스트에 저장된 값 반환 -------------------------------
-    public int printLastList() {
+    public Number printLastList() {
         if(resultList.isEmpty()){
             System.out.println("리스트가 비어있습니다.");
             return 0;
@@ -41,11 +46,11 @@ public class Calculator {
             return;
         }
         for(int i=0; i<resultList.size(); i++){
-            System.out.printf("%d번째 값 : %d \n",i+1,resultList.get(i));
+            System.out.println(i+1+"번째 값 : "+resultList.get(i));
         }
     }
     //리스트에 저장된 원하는 값 출력 -------------------------------
-    public int printList(int index) {
+    public Number printList(int index) {
         if(index < 1 || index > resultList.size()){
             System.out.println("잘못된 번호 입니다.");
             return 0;
@@ -74,7 +79,7 @@ public class Calculator {
     }
 
     // 숫자 입력 받는 메서드
-    public static Integer getNumberInput(Scanner sc){
+    public static Number getNumberInput(Scanner sc){
         while(true){
             System.out.println("숫자 입력(exit입력 시 종료) :");
             String input = sc.next();
@@ -82,6 +87,9 @@ public class Calculator {
                 return null;
             }
             try{
+                if(input.contains(".")){
+                    return Double.parseDouble(input);
+                }
                 return Integer.parseInt(input);
             }catch(NumberFormatException e){
                 System.out.println("숫자를 입력해주세요.");
@@ -106,7 +114,7 @@ public class Calculator {
     }
 
     //결과 출력 메서드
-    public static void printResult(Calculator calculator,int result){
+    public static void printResult(Calculator calculator,Number result){
         System.out.println("결과 :"+result);
         System.out.println("가장 처음 리스트에 저장된 값 :"+calculator.printFirstList());
         System.out.println("가장 나중에 리스트에 저장된 값 :"+calculator.printLastList());
@@ -115,7 +123,7 @@ public class Calculator {
     }
 
     // 케터 세터(값 저장용이기때문에 세터는 필요없음) -------------------------------
-    public List<Integer> getResultList() {
+    public List<Number> getResultList() {
         return resultList;
     }
 }
