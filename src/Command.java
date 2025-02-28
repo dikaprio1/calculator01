@@ -46,10 +46,10 @@ public class Command extends Calculator{
     //결과 출력 메서드 ------------------------------- ------------------------------- -------------------------------
     public static void printResult(Command command,Number result){
         System.out.println("결과 :"+result);
-        System.out.println("가장 처음 리스트에 저장된 값 :"+command.printFirstList());
-        System.out.println("가장 나중에 리스트에 저장된 값 :"+command.printLastList());
+        System.out.println("가장 처음 리스트에 저장된 값 :"+ printFirstList());
+        System.out.println("가장 나중에 리스트에 저장된 값 :"+printLastList());
         System.out.println("리스트에 저장된 모든 값 출력");
-        command.printAllList();
+        printAllList();
     }
 
     //가장 처음 리스트에 저장된 값 반환 ------------------------------- -------------------------------
