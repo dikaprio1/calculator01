@@ -2,7 +2,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Calculator<T extends Number> {
-    private static final List<Number> resultList = new ArrayList<>();
+    public static final List<Number> resultList = new ArrayList<>();
 
     //사칙연산 수행 후에 결과값 반환하는 메서드 ------------------------------- ------------------------------- -------------------------------
     public Number calculate(T num1, T num2, OperatorType operatorType) {
@@ -87,12 +87,20 @@ public class Calculator<T extends Number> {
     }
 
 
-    // 숫자 입력 받는 메서드 ------------------------------- ------------------------------- -------------------------------
-    public static Number getNumberInput(Scanner sc){
+    // 입력 받는 메서드 ------------------------------- ------------------------------- -------------------------------
+    public static Number getNumberOrSwitchMode(Scanner sc){
         while(true){
-            System.out.println("숫자 입력(exit입력 시 종료) :");
+            System.out.println("[계산기 모드]입력 :");
             String input = sc.next();
             if(input.equalsIgnoreCase("exit")){
+                System.exit(0);
+            }
+            if(input.equalsIgnoreCase("lamda")){
+                System.out.println("명령어 모드 전환");
+                return null;
+            }
+            if(input.equalsIgnoreCase("calculator")){
+                System.out.println("계산기 모드 전환");
                 return null;
             }
             try{
@@ -101,7 +109,7 @@ public class Calculator<T extends Number> {
                 }
                 return Integer.parseInt(input);
             }catch(NumberFormatException e){
-                System.out.println("숫자를 입력해주세요.");
+                System.out.println("올바른 숫자 또는 모드전환 명령어를 입력해주세요.");
             }
 
         }
@@ -113,7 +121,7 @@ public class Calculator<T extends Number> {
             System.out.println("사칙연산(+,-,*,/) 중 하나 선택 입력 (exit입력 시 종료):");
             String input = sc.next();
             if(input.equalsIgnoreCase("exit")){
-                return null;
+                System.exit(0);
             }
             if(input.length() == 1 && "+-*/".contains(input)){
                 return OperatorType.fromchar(input.charAt(0));
@@ -121,17 +129,49 @@ public class Calculator<T extends Number> {
             System.out.println("사칙연산(+,-,*,/)을 입력해주세요.");
         }
     }
-
-    //람다식 스트림을 활용한 메서드 예제 (저장된 결과들 중 스캐너로 입력받은 값보다 큰 결과값 출력) -------------------------------
-    public static void lamdaStream(Scanner sc){
-        System.out.println("저장된 수들 중 몇보다 큰 수들만 출력하시겠습니까?");
-        String input = sc.next();
-        Number num= Double.parseDouble(input);
-        List<Number> ls = resultList.stream()
-                .filter(num1 -> num1.doubleValue() > num.doubleValue())
-                .collect(Collectors.toList());
-        System.out.println("스캐너로 입력받은 값보다 큰 수 :"+ls);
+    public static boolean lamdaCommand(Scanner sc, Calculator<Number> calculator) {
+        while(true){
+            System.out.println("[명령어 모드]입력 :");
+            String input = sc.next().toLowerCase();
+            switch (input){
+                case "exit":
+                    System.exit(0);
+                    break;
+                case "calculator":
+                    return true;
+                case "printfirstlist":
+                    calculator.printFirstList();
+                    System.out.println("리스트에 맨 앞에 저장된 값 :");
+                    break;
+                case "printlastlist":
+                    calculator.printLastList();
+                    System.out.println("리스트에 맨 뒤에 저장된 값 :");
+                    break;
+                case "removefirst":
+                    calculator.removeFirst();
+                    System.out.println("리스트에 맨 앞 저장된 값 삭제완료");
+                    break;
+                case "removelastlist":
+                    calculator.removeLastList();
+                    System.out.println("리스트에 맨 뒤에 저장된 값 삭제완료");
+                    break;
+                case "printalllist":
+                    System.out.println("-저장된 모든 결과 값 리스트-");
+                    calculator.printAllList();
+                    break;
+                case "inputhigh":
+                    LamdaStream.inputHigh(sc);
+                    break;
+                case "inputlow":
+                    LamdaStream.inputLow(sc);
+                    break;
+                default:
+                    System.out.println("올바른 명령어를 입력해주세요.");
+            }
+        }
     }
+
+
 
     //결과 출력 메서드 ------------------------------- ------------------------------- -------------------------------
     public static void printResult(Calculator calculator,Number result){
