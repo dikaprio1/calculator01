@@ -1,75 +1,76 @@
 import java.util.Scanner;
 
-//TIP 코드를 <b>실행</b>하려면 <shortcut actionId="Run"/>을(를) 누르거나
-// 에디터 여백에 있는 <icon src="AllIcons.Actions.Execute"/> 아이콘을 클릭하세요.
 public class App {
     public static void main(String[] args) {
         //속성
         Scanner sc = new Scanner(System.in);
-        char cal = ' ';
-        String input;
-        int result = 0;
-        int num1,num2;
         Calculator calculator = new Calculator();
 
-
-        exitwhile:
-        while (true) {
-            System.out.println("숫자 입력 (exit 입력시 종료) :");
-            input = sc.next();
-            if(input.equals("exit")){
+        //기능
+        while(true){
+            Integer num1 = getNumberInput(sc);
+            if(num1 == null){
                 break;
             }
-            try {
-                num1 = Integer.parseInt(input);
-            }catch (NumberFormatException e){
-                System.out.println("숫자를 입력해주세요");
-                continue;
+            OperatorType operatorType = getOperatorInput(sc);
+            if(operatorType == null){
+                break;
             }
-            if (num1 >= 0) {
-                exitwhile2:
-                while (true) {
-                    System.out.println("사칙연산(+,-,*,/) 중 하나 선택 입력 (exit 입력시 종료) :");
-                    input = sc.next();
-                    if(input.equals("exit")){
-                        break exitwhile;
-                    } else if (input.length() > 1) {
-                        System.out.println("사칙연산(+,-,*,/)을 입력해주세요");
-                        continue;
-                    }
-                    cal = input.charAt(0);
-                    if (cal == '+' || cal == '-' || cal == '*' || cal == '/') {
-                        while (true) {
-                            System.out.println("숫자 입력 (exit 입력시 종료):");
-                            input = sc.next();
-                            if(input.equals("exit")){
-                                break exitwhile;
-                            }
-                            try {
-                                num2 = Integer.parseInt(input);
-                            }catch (NumberFormatException e){
-                                System.out.println("숫자를 입력해주세요");
-                                continue;
-                            }
-                            if (num2 >= 0) {
-                                if(cal == '/' && num2 == 0){
-                                    System.out.println("0으로 나눌수없습니다 다시입력해주세요");
-                                    continue;
-                                }
-                                result = calculator.calculate(num1, num2, cal);
-                            }else{
-                                System.out.println("양의 정수를 입력해주세요");
-                            }
-                            break exitwhile2;
-                        }
-                    } else {
-                        System.out.println("사칙연산(+,-,*,/)을 입력해주세요");
-                    }
+            Integer num2;
+            while(true){
+                num2 = getNumberInput(sc);
+                if(num2 == null){
+                    return;
                 }
-            } else {
-                System.out.println("양의 정수를 입력해주세요");
+                if(operatorType == OperatorType.DIV && num2 == 0){
+                    System.out.println("0으로 나눌 수 없습니다. 다시 입력해주세요.");
+                    continue;
+                }
+                break;
             }
-            System.out.println("결과 :"+result);
+            int result = calculator.calculate(num1,num2,operatorType);
+            printResult(calculator,result);
         }
+    }
+    
+    // 숫자 입력 받는 메서드
+    private static Integer getNumberInput(Scanner sc){
+        while(true){
+            System.out.println("숫자 입력(exit입력 시 종료) :");
+            String input = sc.next();
+            if(input.equalsIgnoreCase("exit")){
+                return null;
+            }
+            try{
+                return Integer.parseInt(input);
+            }catch(NumberFormatException e){
+                System.out.println("숫자를 입력해주세요.");
+            }
+
+        }
+    }
+    
+    // 사칙연산 입력받는 메서드
+    private static OperatorType getOperatorInput(Scanner sc){
+        while(true){
+            System.out.println("사칙연산(+,-,*,/) 중 하나 선택 입력 (exit입력 시 종료):");
+            String input = sc.next();
+            if(input.equalsIgnoreCase("exit")){
+                return null;
+            }
+            if(input.length() == 1 && "+-*/".contains(input)){
+                return OperatorType.fromchar(input.charAt(0));
+            }
+            System.out.println("사칙연산(+,-,*,/)을 입력해주세요.");
+        }
+    }
+    
+    //결과 출력 메서드
+    private static void printResult(Calculator calculator,int result){
+        System.out.println("결과 :"+result);
+        System.out.println("가장 처음 리스트에 저장된 값 :"+calculator.printFirstList());
+        System.out.println("가장 나중에 리스트에 저장된 값 :"+calculator.printLastList());
+        System.out.println("리스트에 저장된 모든 값 출력");
+        calculator.printAllList();
     }
 }
