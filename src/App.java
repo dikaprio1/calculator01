@@ -29,6 +29,7 @@ public class App{
             }
             Number result = calculator.calculate(num1,num2,operatorType);
             Calculator.printResult(calculator,result);
+            Calculator.lamdaStream(sc);
         }
     }
 
