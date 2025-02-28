@@ -4,13 +4,13 @@ public class Calculator {
     private final List<Integer> resultList = new ArrayList<>();
 
     //사칙연산 수행 후에 결과값 반환하는 메서드
-    public int calculate(int num1, int num2, char oper) {
+    public int calculate(int num1, int num2, OperatorType operatorType) {
         int result;
-        switch (oper) {
-            case '+': result = num1 + num2; break;
-            case '-':result = num1 - num2;break;
-            case '*':result = num1 * num2;break;
-            case '/':result = num1 / num2;break;
+        switch (operatorType) {
+            case ADD: result = num1 + num2; break;
+            case SUB:result = num1 - num2;break;
+            case MUL:result = num1 * num2;break;
+            case DIV:result = num1 / num2;break;
             default:
                 System.out.println("예상치못한 오류");
                 return 0;

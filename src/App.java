@@ -12,8 +12,8 @@ public class App {
             if(num1 == null){
                 break;
             }
-            char oper = getOperatorInput(sc);
-            if(oper == 'e'){
+            OperatorType operatorType = getOperatorInput(sc);
+            if(operatorType == null){
                 break;
             }
             Integer num2;
@@ -22,13 +22,13 @@ public class App {
                 if(num2 == null){
                     return;
                 }
-                if(oper == '/' && num2 == 0){
+                if(operatorType == OperatorType.DIV && num2 == 0){
                     System.out.println("0으로 나눌 수 없습니다. 다시 입력해주세요.");
                     continue;
                 }
                 break;
             }
-            int result = calculator.calculate(num1,num2,oper);
+            int result = calculator.calculate(num1,num2,operatorType);
             printResult(calculator,result);
         }
     }
@@ -51,15 +51,15 @@ public class App {
     }
     
     // 사칙연산 입력받는 메서드
-    private static char getOperatorInput(Scanner sc){
+    private static OperatorType getOperatorInput(Scanner sc){
         while(true){
             System.out.println("사칙연산(+,-,*,/) 중 하나 선택 입력 (exit입력 시 종료):");
             String input = sc.next();
             if(input.equalsIgnoreCase("exit")){
-                return 'e';
+                return null;
             }
             if(input.length() == 1 && "+-*/".contains(input)){
-                return input.charAt(0);
+                return OperatorType.fromchar(input.charAt(0));
             }
             System.out.println("사칙연산(+,-,*,/)을 입력해주세요.");
         }
