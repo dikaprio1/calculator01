@@ -5,6 +5,7 @@ public class App{
         //속성
         Scanner sc = new Scanner(System.in);
         Calculator<Number> calculator = new Calculator<>();
+        Command command = new Command();
         boolean switchprogram = true; //true(계산기) false(lamda모드)
         //기능
         while(true){
@@ -33,13 +34,13 @@ public class App{
                     break;
                 }
                 Number result = calculator.calculate(num1,num2,operatorType);
-                Calculator.printResult(calculator,result);
+                Command.printResult(command,result);
             }else{
                 System.out.println("[명령어 모드] 명령어 입력");
                 System.out.println("exit-종료/calculator-계산기 전환/printfirstlist-리스트에 맨 앞에 저장된 값/printlastlist-리스트에 맨 뒤에 저장된 값/printalllist-리스트에 저장된 모든 값 출력");
                 System.out.println("/removefirst-가장 처음 리스트에 저장된 값 삭제/removelastlist-리스트에 맨 뒤에 저장된 값 삭제");
                 System.out.println("/inputhigh-저장된 수들 중 몇보다 큰 수/inputlow-저장된 수들 중 몇보다 작은 수");
-                switchprogram = Calculator.lamdaCommand(sc,calculator);
+                switchprogram = Command.lamdaCommand(sc,calculator);
             }
         }
     }
