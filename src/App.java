@@ -1,23 +1,23 @@
 import java.util.Scanner;
 
-public class App extends ArithmeticCalculator{
+public class App{
     public static void main(String[] args){
         //속성
         Scanner sc = new Scanner(System.in);
         Calculator calculator = new Calculator();
         //기능
         while(true){
-            Integer num1 = getNumberInput(sc);
+            Integer num1 = Calculator.getNumberInput(sc);
             if(num1 == null){
                 break;
             }
-            OperatorType operatorType = getOperatorInput(sc);
+            OperatorType operatorType = Calculator.getOperatorInput(sc);
             if(operatorType == null){
                 break;
             }
             Integer num2;
             while(true){
-                num2 = getNumberInput(sc);
+                num2 = Calculator.getNumberInput(sc);
                 if(num2 == null){
                     return;
                 }
@@ -28,7 +28,7 @@ public class App extends ArithmeticCalculator{
                 break;
             }
             int result = calculator.calculate(num1,num2,operatorType);
-            printResult(calculator,result);
+            Calculator.printResult(calculator,result);
         }
     }
 
