@@ -37,10 +37,20 @@ public class Command extends Calculator{
                 case "inputlow":
                     LamdaStream.inputLow(sc);
                     break;
+                case "help":
+                    Command.commandHelp();
+                    break;
                 default:
                     System.out.println("올바른 명령어를 입력해주세요.");
             }
         }
+    }
+
+    //커멘드 출력 메서드 ------------------------------- ------------------------------- -------------------------------
+    public static void commandHelp(){
+        System.out.println("exit-종료/calculator-계산기 전환/printfirstlist-리스트에 맨 앞에 저장된 값/printlastlist-리스트에 맨 뒤에 저장된 값/printalllist-리스트에 저장된 모든 값 출력");
+        System.out.println("/removefirst-가장 처음 리스트에 저장된 값 삭제/removelastlist-리스트에 맨 뒤에 저장된 값 삭제");
+        System.out.println("/inputhigh-저장된 수들 중 몇보다 큰 수/inputlow-저장된 수들 중 몇보다 작은 수/help-명령어 보기");
     }
 
     //결과 출력 메서드 ------------------------------- ------------------------------- -------------------------------
