@@ -14,7 +14,7 @@ public class LamdaStream{
         System.out.println("스캐너로 입력받은 값보다 큰 수 :"+ls);
     }
 
-    //람다식 스트림을 활용한 메서드 예제 (저장된 결과들 중 스캐너로 입력받은 값보다 큰 결과값 출력)
+    //람다식 스트림을 활용한 메서드 예제 (저장된 결과들 중 스캐너로 입력받은 값보다 작은 결과값 출력)
     public static void inputLow(Scanner sc){
         System.out.println("저장된 수들 중 몇보다 작은 수들만 출력하시겠습니까?");
         String input = sc.next();
@@ -22,6 +22,6 @@ public class LamdaStream{
         List<Number> ls = Calculator.resultList.stream()
                 .filter(num1 -> num1.doubleValue() < num.doubleValue())
                 .toList();
-        System.out.println("스캐너로 입력받은 값보다 큰 수 :"+ls);
+        System.out.println("스캐너로 입력받은 값보다 작은 수 :"+ls);
     }
 }
